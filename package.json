@@ -1,0 +1,18 @@
+{
+  "name": "customanalyticsengine",
+  "version": "1.0.0",
+  "description": "Custom Analytics Engine for an API gateway that tracks and analyzes API usage. This engine will log and retrieve usage statistics for different APIs, their users, and patterns.",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "test": "jest"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "mongoose": "^8.13.2"
+  }
+}
