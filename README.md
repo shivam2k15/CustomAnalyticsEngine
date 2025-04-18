@@ -21,3 +21,72 @@ Custom Analytics Engine for an API gateway that tracks and analyzes API usage. T
 
 ```bash
 npm install
+
+```
+Create .env file and add mongodb uri as 
+```
+MONGO_URI = "mongodb+srv://s***:Z***I7@cluster0.h2jr9.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+PORT= 3000
+```
+Sample API requests and responses (this may differ based on your post data)
+```
+http://127.0.0.1:3000/analytics/summary
+Response:
+{
+    "totalRequestsPerEndpoints": [
+        {
+            "totalRequests": 1,
+            "endpoint": "/logs"
+        },
+        {
+            "totalRequests": 1,
+            "endpoint": "logs"
+        },
+        {
+            "totalRequests": 5,
+            "endpoint": "/analytics/summary"
+        }
+    ],
+    "mostAccessedEndpoint": "/analytics/summary"
+}
+```
+sample post /logs
+```
+Example 1:
+http://127.0.0.1:3000/logs
+request body:
+{
+    "endpoint": "/analytics/summary",
+    "method": "get",
+    "userId": "ab58cf88-bfc8-4545-bb0e-982bfa7a10fd",
+    "timestamp": "2025/12/20"
+}
+
+response body: with 201 created status
+{
+    "endpoint": "/analytics/summary",
+    "method": "get",
+    "userId": "ab58cf88-bfc8-4545-bb0e-982bfa7a10fd",
+    "timestamp": "2025-12-19T18:30:00.000Z",
+    "_id": "6802873d3e596c736810cdbe",
+    "__v": 0
+}
+
+
+Example 2:
+request body:
+{
+    "endpoint": "/analytics/summary",
+    "method": "git",
+    "userId": "ab58cf88-bfc8-4545-bb0e-982bfa7a10fd",
+    "timestamp": "2025/12/20"
+}
+response body: with 400 bad request
+{
+    "success": false,
+    "message": "Provide valid method type."
+}
+```
+
+
+
