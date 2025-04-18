@@ -28,8 +28,9 @@ Create .env file and add mongodb uri as
 MONGO_URI = "mongodb+srv://s***:Z***I7@cluster0.h2jr9.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 PORT= 3000
 ```
-Sample API requests and responses (this may differ based on your post data)
+### 2. Sample API requests and responses (this may differ based on your post data)
 ```
+GET request
 http://127.0.0.1:3000/analytics/summary
 Response:
 {
@@ -87,6 +88,30 @@ response body: with 400 bad request
     "message": "Provide valid method type."
 }
 ```
+Sample GET Request http://127.0.0.1:3000/analytics/user/:userId
+```
 
+http://127.0.0.1:3000/analytics/user/ab58cf88-bfc8-4545-bb0e-982bfa7a10fd
+
+Response body: with total requests count and distinct endpoints
+[
+    {
+        "totalRequests": 8,
+        "endpoints": [
+            "/logs",
+            "logs",
+            "/analytics/summary"
+        ]
+    }
+]
+
+```
+## MongoDB Schema Design
+
+Field	    Type	    Description
+endpoint	String	  Requested endpoint (e.g., /api/users)
+method	  String	  HTTP method (GET, POST, etc.)
+userId	  String	  UUID of the API user
+timestamp	Date	    Time of the request
 
 
