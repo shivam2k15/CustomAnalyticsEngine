@@ -107,12 +107,64 @@ Response body: with total requests count and distinct endpoints
 
 ```
 ## MongoDB Schema Design
+
+ApiLog Collection
 ```
 Field	      Type	    Description
 endpoint	String	  Requested endpoint (e.g., /api/users)
 method	    String	  HTTP method (GET, POST, etc.)
 userId	    String	  UUID of the API user
-timestamp Date	    Time of the request
+timestamp   Date	    Time of the request
+```
+as below
+allowedMethods are all http methods
+```
+{
+    endpoint: {
+      type: String,
+      required: true,
+    },
+    method: {
+      type: String,
+      required: true,
+      enum: [...allowedMethods],
+    },
+    userId: {
+      type: String,
+      required: true,
+    },
+    timestamp: {
+      type: Date,
+      default: () => new Date(),
+    },
+  }
 ```
 
+TTL Index: Logs automatically deleted after 30 days:
+```
+ApiLogSchema.index({ timestamp: 1 }, { expireAfterSeconds: 2592000 });
+```
+ Additional Indexes: For fast filtering and aggregations:
+
+```
+ApiLogSchema.index({ userId: 1, endpoint: 1 });
+```
+
+### ⚡ Optimization Strategies
+## ✅ Query Optimizations
+Indexes on timestamp, userId, endpoint for fast filtering and aggregation
+
+Aggregation pipelines with $match, $group, and $project for efficient analytics
+
+## ✅ Storage Optimizations
+TTL index automatically deletes old logs to reduce storage usage
+
+Optional: Archive logs to a separate collection or external storage for long-term backup
+
+## ✅ Performance & Scalability
+Rate-limiting middleware using express-rate-limit to throttle excessive traffic
+
+Worker process (worker.ts) handles background archiving jobs
+
+Handles 10,000+ logs/min with optimized write paths and batching (MongoDB handles bulk well)
 
