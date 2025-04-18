@@ -109,10 +109,10 @@ Response body: with total requests count and distinct endpoints
 ## MongoDB Schema Design
 ```
 Field	      Type	    Description
-endpoint	  String	  Requested endpoint (e.g., /api/users)
+endpoint	String	  Requested endpoint (e.g., /api/users)
 method	    String	  HTTP method (GET, POST, etc.)
 userId	    String	  UUID of the API user
-timestamp	  Date	    Time of the request
+timestamp Date	    Time of the request
 ```
 
 
